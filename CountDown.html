@@ -1,0 +1,111 @@
+<body>
+    <div class="CountDown_Goal">
+      <span class="CountDown_GoalTo">to</span><span id="countdown_date" data-countdown-date="2020/09/19 00:00:00" class="CountDown_GoalDate">2020.09.19</span>
+    </div>
+    <div class="CountDown_Limit">
+      <div class="CountDown_LimitItem">
+        <span id="countdown_days" class="CountDown_LimitNumber"></span><span class="CountDown_LimitUnit">DAYS</span>
+      </div>
+      <div class="CountDown_LimitItem">
+        <span id="countdown_hours" class="CountDown_LimitNumber"></span><span class="CountDown_LimitUnit">HOURS</span>
+      </div>
+      <div class="CountDown_LimitItem">
+        <span id="countdown_minutes" class="CountDown_LimitNumber"></span><span class="CountDown_LimitUnit">MINUTES</span>
+      </div>
+      <div class="CountDown_LimitItem">
+        <span id="countdown_seconds" class="CountDown_LimitNumber"></span><span class="CountDown_LimitUnit">SECONDS</span>
+      </div>
+    </div>
+</body>
+<style type="text/css">
+.CountDown_Goal{
+    font-family: poynter-oldstyle-display, serif;
+    text-align: center;
+}
+
+.CountDown_GoalTo{
+    font-size: 6vw;
+    color: #938e90;
+}
+
+.CountDown_GoalDate{
+    display: inline-block;
+    margin-left: 2vw;
+    font-size: 7vw;
+    color: #938e90;
+    letter-spacing: 0.05em;
+    line-height: 1;
+}
+
+.CountDown_Limit{
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-top: 2vw;
+    font-family: poynter-oldstyle-display, serif;
+}
+
+.CountDown_LimitItem{
+    text-align: center;
+    margin-right: 2vw;
+    margin-left: 2vw;
+}
+
+.CountDown_LimitNumber{
+    font-size: 7vw;
+    color: #938e90;
+    line-height: 1;
+}
+
+.CountDown_LimitUnit{
+    display: block;
+    margin-top: 2vw;
+    font-size: 3vw;
+    color: #938e90;
+}
+</style>
+
+<script type="text/javascript">
+function showCountdown() {
+   // 現在日時を数値に変換
+   var nowDate = new Date();
+   var dnumNow = nowDate.getTime();
+
+   // 指定日時を数値に変換
+   var strTargetDate  = document.getElementById("countdown_date").dataset.countdownDate;
+   var targetDate = new Date(strTargetDate);
+   var dnumTarget = targetDate.getTime();
+
+   // 表示を準備
+   var dlYear  = targetDate.getFullYear();
+   var dlMonth = targetDate.getMonth() + 1;
+   var dlDate  = targetDate.getDate();
+   var dlHour  = targetDate.getHours();
+   var dlMin   = targetDate.getMinutes();
+   var dlSec   = targetDate.getSeconds();
+
+   // 引き算して日数(ミリ秒)の差を計算
+   var diff2Dates = dnumTarget - dnumNow;
+   if( dnumTarget < dnumNow ) {
+      // 期限が過ぎた場合は0
+      diff2Dates = 0;
+   }
+
+   // 差のミリ秒を、日数・時間・分・秒に分割
+   var dDays  = diff2Dates / ( 1000 * 60 * 60 * 24 );   // 日数
+   diff2Dates = diff2Dates % ( 1000 * 60 * 60 * 24 );
+   var dHour  = diff2Dates / ( 1000 * 60 * 60 );   // 時間
+   diff2Dates = diff2Dates % ( 1000 * 60 * 60 );
+   var dMin   = diff2Dates / ( 1000 * 60 );   // 分
+   diff2Dates = diff2Dates % ( 1000 * 60 );
+   var dSec   = diff2Dates / 1000;   // 秒
+
+   // 作成した文字列を表示
+   document.getElementById("countdown_days").innerText = Math.floor(dDays);
+   document.getElementById("countdown_hours").innerText = Math.floor(dHour);
+   document.getElementById("countdown_minutes").innerText = Math.floor(dMin);
+   document.getElementById("countdown_seconds").innerText = Math.floor(dSec);
+}
+// 1秒ごとに実行
+setInterval('showCountdown()',1000);
+</script>
